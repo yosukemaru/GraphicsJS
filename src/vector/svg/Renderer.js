@@ -222,50 +222,50 @@ acgraph.vector.svg.Renderer.prototype.measure = function(text, style) {
     if (goog.string.endsWith(text, ' '))
       additionWidth += spaceWidth || this.getSpaceBounds(style).width;
   }
+  //
+  // style['fontStyle'] ?
+  //     this.setAttribute_(this.measurementText_, 'font-style', style['fontStyle']) :
+  //     this.removeAttribute_(this.measurementText_, 'font-style');
+  //
+  // style['fontVariant'] ?
+  //     this.setAttribute_(this.measurementText_, 'font-variant', style['fontVariant']) :
+  //     this.removeAttribute_(this.measurementText_, 'font-variant');
+  //
+  // style['fontFamily'] ?
+  //     this.setAttribute_(this.measurementText_, 'font-family', style['fontFamily']) :
+  //     this.removeAttribute_(this.measurementText_, 'font-family');
+  //
+  // style['fontSize'] ?
+  //     this.setAttribute_(this.measurementText_, 'font-size', style['fontSize']) :
+  //     this.removeAttribute_(this.measurementText_, 'font-size');
+  //
+  // style['fontWeight'] ?
+  //     this.setAttribute_(this.measurementText_, 'font-weight', style['fontWeight']) :
+  //     this.removeAttribute_(this.measurementText_, 'font-weight');
+  //
+  // style['letterSpacing'] ?
+  //     this.setAttribute_(this.measurementText_, 'letter-spacing', style['letterSpacing']) :
+  //     this.removeAttribute_(this.measurementText_, 'letter-spacing');
+  //
+  // style['decoration'] ?
+  //     this.setAttribute_(this.measurementText_, 'text-decoration', style['decoration']) :
+  //     this.removeAttribute_(this.measurementText_, 'text-decoration');
 
-  style['fontStyle'] ?
-      this.setAttribute_(this.measurementText_, 'font-style', style['fontStyle']) :
-      this.removeAttribute_(this.measurementText_, 'font-style');
-
-  style['fontVariant'] ?
-      this.setAttribute_(this.measurementText_, 'font-variant', style['fontVariant']) :
-      this.removeAttribute_(this.measurementText_, 'font-variant');
-
-  style['fontFamily'] ?
-      this.setAttribute_(this.measurementText_, 'font-family', style['fontFamily']) :
-      this.removeAttribute_(this.measurementText_, 'font-family');
-
-  style['fontSize'] ?
-      this.setAttribute_(this.measurementText_, 'font-size', style['fontSize']) :
-      this.removeAttribute_(this.measurementText_, 'font-size');
-
-  style['fontWeight'] ?
-      this.setAttribute_(this.measurementText_, 'font-weight', style['fontWeight']) :
-      this.removeAttribute_(this.measurementText_, 'font-weight');
-
-  style['letterSpacing'] ?
-      this.setAttribute_(this.measurementText_, 'letter-spacing', style['letterSpacing']) :
-      this.removeAttribute_(this.measurementText_, 'letter-spacing');
-
-  style['decoration'] ?
-      this.setAttribute_(this.measurementText_, 'text-decoration', style['decoration']) :
-      this.removeAttribute_(this.measurementText_, 'text-decoration');
-
-  this.measurementTextNode_.nodeValue = text;
-  var bbox = this.measurementText_['getBBox']();
-  this.measurementTextNode_.nodeValue = '';
-
-  if (style['fontVariant'] && goog.userAgent.OPERA) {
-    this.measurementTextNode_.nodeValue = text.charAt(0).toUpperCase();
-    bbox.height = this.measurementText_['getBBox']().height;
-  }
+  // this.measurementTextNode_.nodeValue = text;
+  // var bbox = this.measurementText_['getBBox']();
+  // this.measurementTextNode_.nodeValue = '';
+  //
+  // if (style['fontVariant'] && goog.userAgent.OPERA) {
+  //   this.measurementTextNode_.nodeValue = text.charAt(0).toUpperCase();
+  //   bbox.height = this.measurementText_['getBBox']().height;
+  // }
 
   var bbox_html = this.measuringHTMLText(text, style);
   // console.log(bbox_html);
-  console.log(bbox, bbox_html);
+  // console.log(bbox, bbox_html);
 
-  return new acgraph.math.Rect(bbox.x, bbox.y, bbox.width + additionWidth, bbox.height);
-  // return bbox_html;
+  // return new acgraph.math.Rect(bbox.x, bbox.y, bbox.width + additionWidth, bbox.height);
+  return bbox_html;
 };
 
 
