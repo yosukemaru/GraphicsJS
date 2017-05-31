@@ -1192,6 +1192,30 @@ acgraph.vector.Stage.prototype.isDirty = function() {
 
 
 /**
+ * Normalize image size for export.
+ * @param {number=} opt_width
+ * @param {number=} opt_height
+ * @return {{width: number, height: number}}
+ * @private
+ */
+acgraph.vector.Stage.prototype.normalizeImageSize_ = function(opt_width, opt_height) {
+  var ratio = this.width() / this.height();
+  opt_width = goog.isDef(opt_width) ?
+      opt_width :
+      opt_height ?
+          Math.round(opt_height * ratio) :
+          /** @type {number} */(this.width());
+  opt_height = goog.isDef(opt_height) ?
+      opt_height :
+      opt_width ?
+          Math.round(opt_width / ratio) :
+          /** @type {number} */(this.height());
+
+  return {width: opt_width, height: opt_height};
+};
+
+
+/**
  * Checks if element has unsync state.
  * Only for interface.
  * @param {acgraph.vector.Element.DirtyState} state State check.
@@ -1250,11 +1274,12 @@ acgraph.vector.Stage.prototype.shareUrl_ = function(type, data, asBase64, saveAn
  * @private
  */
 acgraph.vector.Stage.prototype.addPngData_ = function(data, opt_width, opt_height, opt_quality, opt_filename) {
-  data['data'] = this.toSvg(opt_width, opt_height);
+  var size = this.normalizeImageSize_(opt_width, opt_height);
+  data['data'] = this.toSvg(size.width, size.height);
   data['dataType'] = 'svg';
   data['responseType'] = 'file';
-  if (goog.isDef(opt_width)) data['width'] = opt_width;
-  if (goog.isDef(opt_height)) data['height'] = opt_height;
+  data['width'] = size.width;
+  data['height'] = size.height;
   if (goog.isDef(opt_quality)) data['quality'] = opt_quality;
   if (goog.isDef(opt_filename)) data['file-name'] = opt_filename;
 };
@@ -1292,11 +1317,13 @@ acgraph.vector.Stage.prototype.shareAsPng = function(onSuccess, opt_onError, opt
  * @private
  */
 acgraph.vector.Stage.prototype.addJpgData_ = function(data, opt_width, opt_height, opt_quality, opt_forceTransparentWhite, opt_filename) {
-  data['data'] = this.toSvg(opt_width, opt_height);
+  var size = this.normalizeImageSize_(opt_width, opt_height);
+  data['data'] = this.toSvg(size.width, size.height);
+
   data['dataType'] = 'svg';
   data['responseType'] = 'file';
-  if (goog.isDef(opt_width)) data['width'] = opt_width;
-  if (goog.isDef(opt_height)) data['height'] = opt_height;
+  data['width'] = size.width;
+  data['height'] = size.height;
   if (goog.isDef(opt_quality)) data['quality'] = opt_quality;
   if (goog.isDef(opt_forceTransparentWhite)) data['force-transparent-white'] = opt_forceTransparentWhite;
   if (goog.isDef(opt_filename)) data['file-name'] = opt_filename;
