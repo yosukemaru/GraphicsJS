@@ -97,57 +97,31 @@ acgraph.getWrapperForDOM = function(node, stage) {
  */
 //----------------------------------------------------------------------------------------------------------------------
 //
-//  Enums
-//
-//----------------------------------------------------------------------------------------------------------------------
-/**
- Stage types supported by AnyChart Data Visualization Toolkit.
- @enum {string}
- */
-acgraph.StageType = {
-  /**
-   A vector drawing technology compatible with the majority of modern browsers (both desktop and mobile).
-   It is used as the main drawing technology.<br/>
-   See more at <a href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics" target="_blank">Wiki Page</a>
-   */
-  SVG: 'svg',
-
-  /**
-   A vector drawing technology compatible only with  Microsoft Internet Explorer (versions 6-8).
-   It is used as an alternative for SVG because SVG is not supported by IE.<br/>
-   See more at <a href="http://en.wikipedia.org/wiki/Vector_Markup_Language" target="_blank">Wiki Page</a>
-   */
-  VML: 'vml'
-};
-
-
-//----------------------------------------------------------------------------------------------------------------------
-//
 // Instantiate stage
 //
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Supported Stage Type Cache.
- * @type {?acgraph.StageType}
+ * @type {?acgraph.enums.StageType}
  * @private
  */
 acgraph.type_ = null;
 
 
 if (goog.userAgent.IE && !goog.userAgent.isVersionOrHigher('9')) {
-  acgraph.type_ = acgraph.StageType.VML;
+  acgraph.type_ = acgraph.enums.StageType.VML;
 } else {
-  acgraph.type_ = acgraph.StageType.SVG;
+  acgraph.type_ = acgraph.enums.StageType.SVG;
 }
 
 
 /**
  Returns the Stage type recommended for the current browser (identified by a name and version), which is selected from
  the supported Stage types.
- @return {acgraph.StageType} A Stage type supported by the current browser.
+ @return {acgraph.enums.StageType} A Stage type supported by the current browser.
  */
 acgraph.type = function() {
-  return /** @type {acgraph.StageType} */(acgraph.type_);
+  return /** @type {acgraph.enums.StageType} */(acgraph.type_);
 };
 
 
@@ -155,7 +129,7 @@ acgraph.type = function() {
  * @type {!acgraph.vector.Renderer}
  * @private
  */
-acgraph.renderer_ = (acgraph.type_ == acgraph.StageType.VML) ?
+acgraph.renderer_ = (acgraph.type_ == acgraph.enums.StageType.VML) ?
     acgraph.vector.vml.Renderer.getInstance() :
     acgraph.vector.svg.Renderer.getInstance();
 
@@ -172,7 +146,7 @@ acgraph.getRenderer = function() {
 /**
  * Creates and returns a Stage object providing instruments for cross-browser drawing with a commnon interface
  * for <u>all</u> supported technologies.
- * @see acgraph.StageType
+ * @see acgraph.enums.StageType
  * @param {(Element|string)=} opt_container A container where all graphics will be drawn.
  * It can be defined later, for example while rendering.
  * @param {(string|number)=} opt_width The width of a Stage object in pixels.
@@ -181,7 +155,7 @@ acgraph.getRenderer = function() {
  * all supported technologies.
  */
 acgraph.create = function(opt_container, opt_width, opt_height) {
-  return (acgraph.type_ == acgraph.StageType.VML) ?
+  return (acgraph.type_ == acgraph.enums.StageType.VML) ?
       new acgraph.vector.vml.Stage(opt_container, opt_width, opt_height) :
       new acgraph.vector.svg.Stage(opt_container, opt_width, opt_height);
 };
@@ -393,7 +367,7 @@ acgraph.image = function(opt_src, opt_x, opt_y, opt_width, opt_height) {
  @return {!acgraph.vector.Text} An instance of the {@link acgraph.vector.Text} or the {@link acgraph.vector.vml.Text} class.
  */
 acgraph.text = function(opt_x, opt_y, opt_text, opt_style) {
-  var text = (acgraph.type_ == acgraph.StageType.VML) ?
+  var text = (acgraph.type_ == acgraph.enums.StageType.VML) ?
       new acgraph.vector.vml.Text(opt_x, opt_y) :
       new acgraph.vector.Text(opt_x, opt_y);
   if (opt_style) text.style(opt_style);
@@ -452,7 +426,7 @@ acgraph.patternFill = function(bounds) {
  @return {!acgraph.vector.Clip} The instance of the {@link acgraph.vector.Clip} class.
  */
 acgraph.clip = function(opt_leftOrShape, opt_top, opt_width, opt_height) {
-  return (acgraph.type_ == acgraph.StageType.VML) ?
+  return (acgraph.type_ == acgraph.enums.StageType.VML) ?
       new acgraph.vector.vml.Clip(null, opt_leftOrShape, opt_top, opt_width, opt_height) :
       new acgraph.vector.Clip(null, opt_leftOrShape, opt_top, opt_width, opt_height);
 };
@@ -561,8 +535,8 @@ acgraph.updateReferences = function() {
   goog.exportSymbol('acgraph.create', acgraph.create);
   goog.exportSymbol('acgraph.type', acgraph.type);
   goog.exportSymbol('acgraph.server', acgraph.server);
-  goog.exportSymbol('acgraph.StageType.SVG', acgraph.StageType.SVG);
-  goog.exportSymbol('acgraph.StageType.VML', acgraph.StageType.VML);
+  goog.exportSymbol('acgraph.enums.StageType.SVG', acgraph.enums.StageType.SVG);
+  goog.exportSymbol('acgraph.enums.StageType.VML', acgraph.enums.StageType.VML);
   goog.exportSymbol('acgraph.rect', acgraph.rect);
   goog.exportSymbol('acgraph.circle', acgraph.circle);
   goog.exportSymbol('acgraph.ellipse', acgraph.ellipse);

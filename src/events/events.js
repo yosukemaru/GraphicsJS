@@ -1,5 +1,4 @@
 goog.provide('acgraph.events');
-goog.provide('acgraph.events.EventType');
 
 goog.require('goog.events');
 
@@ -75,91 +74,26 @@ acgraph.events.unlistenByKey = goog.events.unlistenByKey;
 acgraph.events.removeAll = goog.events.removeAll;
 
 
-/**
- * Constants for event names.
- * @enum {string}
- */
-acgraph.events.EventType = {
-  /** Fires on click on an element. */
-  CLICK: 'click',
-
-  /** Fires on double click on an element. */
-  DBLCLICK: 'dblclick',
-
-  /** Fires when the mouse is down on an element. */
-  MOUSEDOWN: 'mousedown',
-
-  /** Fires when the mouse is up on an element. */
-  MOUSEUP: 'mouseup',
-
-  /** Fires when the mouse pointer is over an element. */
-  MOUSEOVER: 'mouseover',
-
-  /** Fires when the mouse pointer is out of an element. */
-  MOUSEOUT: 'mouseout',
-
-  /** Fires when mouse is moved on an element. */
-  MOUSEMOVE: 'mousemove',
-
-  /** Fires on touchstart. */
-  TOUCHSTART: 'touchstart',
-
-  /** Fires on touchmove. */
-  TOUCHMOVE: 'touchmove',
-
-  /** Fires on touchend. */
-  TOUCHEND: 'touchend',
-
-  /**
-   * Fires when the touch is cancelled.
-   * @see http://www.w3.org/TR/2011/WD-touch-events-20110505/#the-touchcancel-event
-   */
-  TOUCHCANCEL: 'touchcancel',
-
-  /** Fires on tap (fast touchstart - touchend). */
-  TAP: 'tap',
-
-  // The drag action was canceled before the START event. Possible reasons:
-  // disabled dragger, dragging with the right mouse button or releasing the
-  // button before reaching the hysteresis distance.
-  /** Fires if drag action was canceled before the START event. */
-  DRAG_EARLY_CANCEL: 'earlycancel',
-
-  /** Fires before drag. */
-  DRAG_BEFORE: 'beforedrag',
-
-  /** Fires on drag. */
-  DRAG: 'drag',
-
-  /** Fires on drag start. */
-  DRAG_START: 'start',
-
-  /** Fires on drag end. */
-  DRAG_END: 'end',
-
-  CONTEXTMENU: 'contextmenu'
-};
-
 //exports
 goog.exportSymbol('acgraph.events.listen', acgraph.events.listen);
 goog.exportSymbol('acgraph.events.listenOnce', acgraph.events.listenOnce);
 goog.exportSymbol('acgraph.events.unlisten', acgraph.events.unlisten);
 goog.exportSymbol('acgraph.events.unlistenByKey', acgraph.events.unlistenByKey);
 goog.exportSymbol('acgraph.events.removeAll', acgraph.events.removeAll);
-goog.exportSymbol('acgraph.events.EventType.CLICK', acgraph.events.EventType.CLICK);
-goog.exportSymbol('acgraph.events.EventType.DBLCLICK', acgraph.events.EventType.DBLCLICK);
-goog.exportSymbol('acgraph.events.EventType.MOUSEUP', acgraph.events.EventType.MOUSEUP);
-goog.exportSymbol('acgraph.events.EventType.MOUSEDOWN', acgraph.events.EventType.MOUSEDOWN);
-goog.exportSymbol('acgraph.events.EventType.MOUSEOVER', acgraph.events.EventType.MOUSEOVER);
-goog.exportSymbol('acgraph.events.EventType.MOUSEOUT', acgraph.events.EventType.MOUSEOUT);
-goog.exportSymbol('acgraph.events.EventType.MOUSEMOVE', acgraph.events.EventType.MOUSEMOVE);
-goog.exportSymbol('acgraph.events.EventType.TOUCHSTART', acgraph.events.EventType.TOUCHSTART);
-goog.exportSymbol('acgraph.events.EventType.TOUCHEND', acgraph.events.EventType.TOUCHEND);
-goog.exportSymbol('acgraph.events.EventType.TOUCHCANCEL', acgraph.events.EventType.TOUCHCANCEL);
-goog.exportSymbol('acgraph.events.EventType.TOUCHMOVE', acgraph.events.EventType.TOUCHMOVE);
-goog.exportSymbol('acgraph.events.EventType.TAP', acgraph.events.EventType.TAP);
-goog.exportSymbol('acgraph.events.EventType.DRAG', acgraph.events.EventType.DRAG);
-goog.exportSymbol('acgraph.events.EventType.DRAG_START', acgraph.events.EventType.DRAG_START);
-goog.exportSymbol('acgraph.events.EventType.DRAG_END', acgraph.events.EventType.DRAG_END);
-goog.exportSymbol('acgraph.events.EventType.DRAG_EARLY_CANCEL', acgraph.events.EventType.DRAG_EARLY_CANCEL);
-goog.exportSymbol('acgraph.events.EventType.DRAG_BEFORE', acgraph.events.EventType.DRAG_BEFORE);
+goog.exportSymbol('acgraph.enums.EventType.CLICK', acgraph.enums.EventType.CLICK);
+goog.exportSymbol('acgraph.enums.EventType.DBLCLICK', acgraph.enums.EventType.DBLCLICK);
+goog.exportSymbol('acgraph.enums.EventType.MOUSEUP', acgraph.enums.EventType.MOUSEUP);
+goog.exportSymbol('acgraph.enums.EventType.MOUSEDOWN', acgraph.enums.EventType.MOUSEDOWN);
+goog.exportSymbol('acgraph.enums.EventType.MOUSEOVER', acgraph.enums.EventType.MOUSEOVER);
+goog.exportSymbol('acgraph.enums.EventType.MOUSEOUT', acgraph.enums.EventType.MOUSEOUT);
+goog.exportSymbol('acgraph.enums.EventType.MOUSEMOVE', acgraph.enums.EventType.MOUSEMOVE);
+goog.exportSymbol('acgraph.enums.EventType.TOUCHSTART', acgraph.enums.EventType.TOUCHSTART);
+goog.exportSymbol('acgraph.enums.EventType.TOUCHEND', acgraph.enums.EventType.TOUCHEND);
+goog.exportSymbol('acgraph.enums.EventType.TOUCHCANCEL', acgraph.enums.EventType.TOUCHCANCEL);
+goog.exportSymbol('acgraph.enums.EventType.TOUCHMOVE', acgraph.enums.EventType.TOUCHMOVE);
+goog.exportSymbol('acgraph.enums.EventType.TAP', acgraph.enums.EventType.TAP);
+goog.exportSymbol('acgraph.enums.EventType.DRAG', acgraph.enums.EventType.DRAG);
+goog.exportSymbol('acgraph.enums.EventType.DRAG_START', acgraph.enums.EventType.DRAG_START);
+goog.exportSymbol('acgraph.enums.EventType.DRAG_END', acgraph.enums.EventType.DRAG_END);
+goog.exportSymbol('acgraph.enums.EventType.DRAG_EARLY_CANCEL', acgraph.enums.EventType.DRAG_EARLY_CANCEL);
+goog.exportSymbol('acgraph.enums.EventType.DRAG_BEFORE', acgraph.enums.EventType.DRAG_BEFORE);

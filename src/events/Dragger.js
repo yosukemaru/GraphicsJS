@@ -48,7 +48,7 @@ goog.inherits(acgraph.events.Dragger, goog.fx.Dragger);
  * @return {boolean}
  */
 acgraph.events.Dragger.prototype.redispatchEarlyCancel = function(e) {
-  return this.targetElement_.dispatchEvent(acgraph.events.EventType.DRAG_EARLY_CANCEL);
+  return this.targetElement_.dispatchEvent(acgraph.enums.EventType.DRAG_EARLY_CANCEL);
 };
 
 
