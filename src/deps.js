@@ -6,7 +6,7 @@ goog.addDependency('../../../../src/error.js', ['acgraph.error'], [], false);
 goog.addDependency('../../../../src/events/BrowserEvent.js', ['acgraph.events.BrowserEvent'], ['goog.events.Event'], false);
 goog.addDependency('../../../../src/events/Dragger.js', ['acgraph.events.DragEvent', 'acgraph.events.Dragger'], ['acgraph.math', 'goog.fx.DragEvent', 'goog.fx.Dragger', 'goog.math.Rect'], false);
 goog.addDependency('../../../../src/events/MouseWheelHandler.js', ['acgraph.events.MouseWheelHandler'], ['goog.events.MouseWheelHandler'], false);
-goog.addDependency('../../../../src/events/events.js', ['acgraph.events', 'acgraph.enums.EventType'], ['goog.events'], false);
+goog.addDependency('../../../../src/events/events.js', ['acgraph.events', 'acgraph.events.EventType'], ['goog.events'], false);
 goog.addDependency('../../../../src/math.js', ['acgraph.math'], ['goog.math', 'goog.math.Coordinate', 'goog.math.Rect', 'goog.math.Size'], false);
 goog.addDependency('../../../../src/utils/HTMLParser.js', ['acgraph.utils.HTMLParser'], ['goog.object'], false);
 goog.addDependency('../../../../src/utils/HelperElement.js', ['acgraph.utils.HelperElement', 'acgraph.utils.HelperElement.EventType'], ['acgraph.events', 'goog.dom', 'goog.events.EventTarget', 'goog.net.IframeIo', 'goog.style', 'goog.userAgent'], false);

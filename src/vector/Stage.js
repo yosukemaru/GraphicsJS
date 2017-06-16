@@ -1297,7 +1297,7 @@ acgraph.vector.Stage.prototype.addPngData_ = function(data, opt_width, opt_heigh
  */
 acgraph.vector.Stage.prototype.shareAsPng = function(onSuccess, opt_onError, opt_asBase64, opt_width, opt_height, opt_quality, opt_filename) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var data = {};
     this.addPngData_(data, opt_width, opt_height, opt_quality, opt_filename);
     this.shareUrl_(acgraph.vector.Stage.ExportType.PNG, data, !!opt_asBase64, true, onSuccess, opt_onError);
@@ -1343,7 +1343,7 @@ acgraph.vector.Stage.prototype.addJpgData_ = function(data, opt_width, opt_heigh
  */
 acgraph.vector.Stage.prototype.shareAsJpg = function(onSuccess, opt_onError, opt_asBase64, opt_width, opt_height, opt_quality, opt_forceTransparentWhite, opt_filename) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var data = {};
     this.addJpgData_(data, opt_width, opt_height, opt_quality, opt_forceTransparentWhite, opt_filename);
     this.shareUrl_(acgraph.vector.Stage.ExportType.JPG, data, !!opt_asBase64, true, onSuccess, opt_onError);
@@ -1379,7 +1379,7 @@ acgraph.vector.Stage.prototype.addSvgData_ = function(data, opt_paperSizeOrWidth
  */
 acgraph.vector.Stage.prototype.shareAsSvg = function(onSuccess, opt_onError, opt_asBase64, opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_filename) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var data = {};
     this.addSvgData_(data, opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_filename);
     this.shareUrl_(acgraph.vector.Stage.ExportType.SVG, data, !!opt_asBase64, true, onSuccess, opt_onError);
@@ -1456,7 +1456,7 @@ acgraph.vector.Stage.prototype.addPdfData_ = function(data, opt_paperSizeOrWidth
  */
 acgraph.vector.Stage.prototype.shareAsPdf = function(onSuccess, opt_onError, opt_asBase64, opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_x, opt_y, opt_filename) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var data = {};
     this.addPdfData_(data, opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_x, opt_y, opt_filename);
     this.shareUrl_(acgraph.vector.Stage.ExportType.PDF, data, !!opt_asBase64, true, onSuccess, opt_onError);
@@ -1476,7 +1476,7 @@ acgraph.vector.Stage.prototype.shareAsPdf = function(onSuccess, opt_onError, opt
  */
 acgraph.vector.Stage.prototype.getPngBase64String = function(onSuccess, opt_onError, opt_width, opt_height, opt_quality) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var data = {};
     this.addPngData_(data, opt_width, opt_height, opt_quality);
     this.shareUrl_(acgraph.vector.Stage.ExportType.PNG, data, true, false, onSuccess, opt_onError);
@@ -1497,7 +1497,7 @@ acgraph.vector.Stage.prototype.getPngBase64String = function(onSuccess, opt_onEr
  */
 acgraph.vector.Stage.prototype.getJpgBase64String = function(onSuccess, opt_onError, opt_width, opt_height, opt_quality, opt_forceTransparentWhite) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var data = {};
     this.addJpgData_(data, opt_width, opt_height, opt_quality, opt_forceTransparentWhite);
     this.shareUrl_(acgraph.vector.Stage.ExportType.JPG, data, true, false, onSuccess, opt_onError);
@@ -1516,7 +1516,7 @@ acgraph.vector.Stage.prototype.getJpgBase64String = function(onSuccess, opt_onEr
  */
 acgraph.vector.Stage.prototype.getSvgBase64String = function(onSuccess, opt_onError, opt_paperSizeOrWidth, opt_landscapeOrHeight) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var data = {};
     this.addSvgData_(data, opt_paperSizeOrWidth, opt_landscapeOrHeight);
     this.shareUrl_(acgraph.vector.Stage.ExportType.SVG, data, true, false, onSuccess, opt_onError);
@@ -1537,7 +1537,7 @@ acgraph.vector.Stage.prototype.getSvgBase64String = function(onSuccess, opt_onEr
  */
 acgraph.vector.Stage.prototype.getPdfBase64String = function(onSuccess, opt_onError, opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_x, opt_y) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var data = {};
     this.addPdfData_(data, opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_x, opt_y);
     this.shareUrl_(acgraph.vector.Stage.ExportType.PDF, data, true, false, onSuccess, opt_onError);
@@ -1556,7 +1556,7 @@ acgraph.vector.Stage.prototype.getPdfBase64String = function(onSuccess, opt_onEr
  */
 acgraph.vector.Stage.prototype.saveAsPng = function(opt_width, opt_height, opt_quality, opt_filename) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var options = {};
     this.addPngData_(options, opt_width, opt_height, opt_quality, opt_filename);
     acgraph.sendRequestToExportServer(acgraph.exportServer + '/png', options);
@@ -1576,7 +1576,7 @@ acgraph.vector.Stage.prototype.saveAsPng = function(opt_width, opt_height, opt_q
  */
 acgraph.vector.Stage.prototype.saveAsJpg = function(opt_width, opt_height, opt_quality, opt_forceTransparentWhite, opt_filename) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var options = {};
     this.addJpgData_(options, opt_width, opt_height, opt_quality, opt_forceTransparentWhite, opt_filename);
     acgraph.sendRequestToExportServer(acgraph.exportServer + '/jpg', options);
@@ -1596,7 +1596,7 @@ acgraph.vector.Stage.prototype.saveAsJpg = function(opt_width, opt_height, opt_q
  */
 acgraph.vector.Stage.prototype.saveAsPdf = function(opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_x, opt_y, opt_filename) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var options = {};
     this.addPdfData_(options, opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_x, opt_y, opt_filename);
     acgraph.sendRequestToExportServer(acgraph.exportServer + '/pdf', options);
@@ -1614,7 +1614,7 @@ acgraph.vector.Stage.prototype.saveAsPdf = function(opt_paperSizeOrWidth, opt_la
  */
 acgraph.vector.Stage.prototype.saveAsSvg = function(opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_filename) {
   var type = acgraph.type();
-  if (type == acgraph.enums.StageType.SVG) {
+  if (type == acgraph.StageType.SVG) {
     var options = {};
     this.addSvgData_(options, opt_paperSizeOrWidth, opt_landscapeOrHeight, opt_filename);
     acgraph.sendRequestToExportServer(acgraph.exportServer + '/svg', options);
@@ -1642,7 +1642,7 @@ acgraph.vector.Stage.prototype.print = function(opt_paperSizeOrWidth, opt_landsc
  */
 acgraph.vector.Stage.prototype.toSvg = function(opt_paperSizeOrWidth, opt_landscapeOrHeight) {
   var type = acgraph.type();
-  if (type != acgraph.enums.StageType.SVG) return '';
+  if (type != acgraph.StageType.SVG) return '';
 
   var result = '';
 
@@ -2558,24 +2558,24 @@ acgraph.vector.Stage.prototype.handleMouseEvent_ = function(e) {
     // we do the binding and unbinding of event only if relatedTarget doesn't belong to the same stage
     if (!(event['relatedTarget'] instanceof acgraph.vector.Element) ||
         (/** @type {acgraph.vector.Element} */(event['relatedTarget'])).getStage() != this) {
-      if (type == acgraph.enums.EventType.MOUSEOVER) {
-        this.eventHandler_.listen(goog.dom.getDocument(), acgraph.enums.EventType.MOUSEMOVE, this.handleMouseEvent_, false);
-      } else if (type == acgraph.enums.EventType.MOUSEOUT) {
-        this.eventHandler_.unlisten(goog.dom.getDocument(), acgraph.enums.EventType.MOUSEMOVE, this.handleMouseEvent_, false);
+      if (type == acgraph.events.EventType.MOUSEOVER) {
+        this.eventHandler_.listen(goog.dom.getDocument(), acgraph.events.EventType.MOUSEMOVE, this.handleMouseEvent_, false);
+      } else if (type == acgraph.events.EventType.MOUSEOUT) {
+        this.eventHandler_.unlisten(goog.dom.getDocument(), acgraph.events.EventType.MOUSEMOVE, this.handleMouseEvent_, false);
       }
     }
     switch (type) {
-      case acgraph.enums.EventType.MOUSEDOWN:
-        this.eventHandler_.listen(goog.dom.getDocument(), acgraph.enums.EventType.MOUSEUP, this.handleMouseEvent_, false);
+      case acgraph.events.EventType.MOUSEDOWN:
+        this.eventHandler_.listen(goog.dom.getDocument(), acgraph.events.EventType.MOUSEUP, this.handleMouseEvent_, false);
         break;
-      case acgraph.enums.EventType.MOUSEUP:
-        this.eventHandler_.unlisten(goog.dom.getDocument(), acgraph.enums.EventType.MOUSEUP, this.handleMouseEvent_, false);
+      case acgraph.events.EventType.MOUSEUP:
+        this.eventHandler_.unlisten(goog.dom.getDocument(), acgraph.events.EventType.MOUSEUP, this.handleMouseEvent_, false);
         break;
-      case acgraph.enums.EventType.TOUCHSTART:
-        this.eventHandler_.listen(goog.dom.getDocument(), acgraph.enums.EventType.TOUCHMOVE, this.handleMouseEvent_, false);
+      case acgraph.events.EventType.TOUCHSTART:
+        this.eventHandler_.listen(goog.dom.getDocument(), acgraph.events.EventType.TOUCHMOVE, this.handleMouseEvent_, false);
         break;
-      case acgraph.enums.EventType.TOUCHEND:
-        this.eventHandler_.unlisten(goog.dom.getDocument(), acgraph.enums.EventType.TOUCHMOVE, this.handleMouseEvent_, false);
+      case acgraph.events.EventType.TOUCHEND:
+        this.eventHandler_.unlisten(goog.dom.getDocument(), acgraph.events.EventType.TOUCHMOVE, this.handleMouseEvent_, false);
         break;
       case goog.events.EventType.POINTERDOWN:
         this.eventHandler_.listen(goog.dom.getDocument(), goog.events.EventType.POINTERMOVE, this.handleMouseEvent_, false);
