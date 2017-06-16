@@ -158,17 +158,6 @@ goog.inherits(acgraph.vector.Stage, goog.events.EventTarget);
 //
 //----------------------------------------------------------------------------------------------------------------------
 /**
- * Errors.
- * @enum {string}
- */
-acgraph.vector.Stage.Error = {
-  CONTAINER_SHOULD_BE_DEFINED: 'Container to render stage should be defined',
-  STAGE_SHOULD_HAVE_DOM_ELEMENT: 'Stage should have dom element',
-  IN_RENDERING_PROCESS: 'Stage already in rendering process'
-};
-
-
-/**
  * DOM changes. Used for to assign quotas.
  * @enum {number}
  */
@@ -2743,9 +2732,5 @@ acgraph.vector.Stage.prototype.disposeInternal = function() {
   proto['removeAllListeners'] = proto.removeAllListeners;
   proto['title'] = proto.title;
   proto['desc'] = proto.desc;
-  goog.exportSymbol('acgraph.events.EventType.RENDER_START', acgraph.vector.Stage.EventType.RENDER_START);
-  goog.exportSymbol('acgraph.events.EventType.RENDER_FINISH', acgraph.vector.Stage.EventType.RENDER_FINISH);
-  goog.exportSymbol('acgraph.vector.Stage.EventType.STAGE_RESIZE', acgraph.vector.Stage.EventType.STAGE_RESIZE);
-  goog.exportSymbol('acgraph.vector.Stage.EventType.STAGE_RENDERED', acgraph.vector.Stage.EventType.STAGE_RENDERED);
 })();
 //endregion

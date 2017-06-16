@@ -236,15 +236,15 @@ acgraph.vector.Text.TextWrap = {
   /**
    No wrap.
    */
-  NO_WRAP: 'noWrap',
+  NO_WRAP: 'no-wrap',
   /**
    Wrap by symbol.
    */
-  BY_LETTER: 'byLetter',
+  BY_LETTER: 'by-letter',
   /**
    Wrap by word.
    */
-  BY_WORD: 'byWord'
+  BY_WORD: 'by-word'
 };
 
 
@@ -1794,29 +1794,4 @@ acgraph.vector.Text.prototype.disposeInternal = function() {
   proto['textWrap'] = proto.textWrap;
   proto['textOverflow'] = proto.textOverflow;
   proto['selectable'] = proto.selectable;
-  goog.exportSymbol('acgraph.vector.Text.TextWrap.NO_WRAP', acgraph.vector.Text.TextWrap.NO_WRAP);
-  goog.exportSymbol('acgraph.vector.Text.TextWrap.BY_LETTER', acgraph.vector.Text.TextWrap.BY_LETTER);
-  goog.exportSymbol('acgraph.vector.Text.TextWrap.BY_WORD', acgraph.vector.Text.TextWrap.BY_WORD);
-  goog.exportSymbol('acgraph.vector.Text.TextOverflow.CLIP', acgraph.vector.Text.TextOverflow.CLIP);
-  goog.exportSymbol('acgraph.vector.Text.TextOverflow.ELLIPSIS', acgraph.vector.Text.TextOverflow.ELLIPSIS);
-  goog.exportSymbol('acgraph.vector.Text.FontStyle.ITALIC', acgraph.vector.Text.FontStyle.ITALIC);
-  goog.exportSymbol('acgraph.vector.Text.FontStyle.NORMAL', acgraph.vector.Text.FontStyle.NORMAL);
-  goog.exportSymbol('acgraph.vector.Text.FontStyle.OBLIQUE', acgraph.vector.Text.FontStyle.OBLIQUE);
-  goog.exportSymbol('acgraph.vector.Text.FontVariant.NORMAL', acgraph.vector.Text.FontVariant.NORMAL);
-  goog.exportSymbol('acgraph.vector.Text.FontVariant.SMALL_CAP', acgraph.vector.Text.FontVariant.SMALL_CAP);
-  goog.exportSymbol('acgraph.vector.Text.Direction.LTR', acgraph.vector.Text.Direction.LTR);
-  goog.exportSymbol('acgraph.vector.Text.Direction.RTL', acgraph.vector.Text.Direction.RTL);
-  goog.exportSymbol('acgraph.vector.Text.Decoration.BLINK', acgraph.vector.Text.Decoration.BLINK);
-  goog.exportSymbol('acgraph.vector.Text.Decoration.LINE_THROUGH', acgraph.vector.Text.Decoration.LINE_THROUGH);
-  goog.exportSymbol('acgraph.vector.Text.Decoration.OVERLINE', acgraph.vector.Text.Decoration.OVERLINE);
-  goog.exportSymbol('acgraph.vector.Text.Decoration.UNDERLINE', acgraph.vector.Text.Decoration.UNDERLINE);
-  goog.exportSymbol('acgraph.vector.Text.Decoration.NONE', acgraph.vector.Text.Decoration.NONE);
-  goog.exportSymbol('acgraph.vector.Text.HAlign.START', acgraph.vector.Text.HAlign.START);
-  goog.exportSymbol('acgraph.vector.Text.HAlign.LEFT', acgraph.vector.Text.HAlign.LEFT);
-  goog.exportSymbol('acgraph.vector.Text.HAlign.CENTER', acgraph.vector.Text.HAlign.CENTER);
-  goog.exportSymbol('acgraph.vector.Text.HAlign.END', acgraph.vector.Text.HAlign.END);
-  goog.exportSymbol('acgraph.vector.Text.HAlign.RIGHT', acgraph.vector.Text.HAlign.RIGHT);
-  goog.exportSymbol('acgraph.vector.Text.VAlign.TOP', acgraph.vector.Text.VAlign.TOP);
-  goog.exportSymbol('acgraph.vector.Text.VAlign.MIDDLE', acgraph.vector.Text.VAlign.MIDDLE);
-  goog.exportSymbol('acgraph.vector.Text.VAlign.BOTTOM', acgraph.vector.Text.VAlign.BOTTOM);
 })();
