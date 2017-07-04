@@ -115,7 +115,7 @@ acgraph.vector.HatchFill.normalizeHatchFillType = function(value, opt_default) {
   value = value.toLowerCase();
 
   for (var i in acgraph.vector.HatchFill.HatchFillType) {
-    if (acgraph.vector.HatchFill.HatchFillType[i].toLowerCase() == value)
+    if (acgraph.vector.HatchFill.HatchFillType[i].toLowerCase() == value || acgraph.vector.HatchFill.HatchFillType[i].toLowerCase().replace(/-/g, '') == value)
       return acgraph.vector.HatchFill.HatchFillType[i];
   }
   return opt_default || acgraph.vector.HatchFill.HatchFillType.BACKWARD_DIAGONAL;
