@@ -44,12 +44,6 @@ acgraph.wrappers_ = {};
 
 
 /**
- * @type {boolean}
- */
-acgraph.isNodeJS = !window['__anychartIsNodeJS'];
-
-
-/**
  * Registers wrapper to allow it to handle browser events.
  * @param {acgraph.vector.Element|acgraph.vector.Stage} wrapper
  */

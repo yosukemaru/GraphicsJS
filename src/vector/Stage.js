@@ -87,7 +87,7 @@ acgraph.vector.Stage = function(opt_container, opt_width, opt_height) {
    */
   this.domElement_ = acgraph.getRenderer().createStageElement();
   acgraph.register(this);
-  acgraph.getRenderer().setStageSize(this.domElement_, acgraph.isNodeJS ? 1024 : '100%', acgraph.isNodeJS ? 768 : '100%');
+  acgraph.getRenderer().setStageSize(this.domElement_, '100%', '100%');
   //We need set 'display: block' for <svg> element to prevent scrollbar on 100% height of parent container (see DVF-620)
   goog.style.setStyle(this.domElement_, 'display', 'block');
   // Add class for check anychart-ui.css attached. (DVF-1619)
@@ -138,8 +138,8 @@ acgraph.vector.Stage = function(opt_container, opt_width, opt_height) {
     goog.events.EventType.CONTEXTMENU
   ], this.handleMouseEvent_, false);
 
-  this.setWidth_(opt_width || (acgraph.isNodeJS ? 1024 : '100%'));
-  this.setHeight_(opt_height || (acgraph.isNodeJS ? 768 : '100%'));
+  this.setWidth_(opt_width || '100%');
+  this.setHeight_(opt_height || '100%');
   this.container_ = goog.dom.getElement(opt_container || null);
   if (this.container_)
     this.updateContainer_();
@@ -851,7 +851,7 @@ acgraph.vector.Stage.prototype.checkSize = function(opt_directCall, opt_silent) 
     if (!opt_silent)
       this.dispatchEvent(acgraph.vector.Stage.EventType.STAGE_RESIZE);
   }
-  if (this.container_ && isDynamicSize && !acgraph.isNodeJS) {
+  if (this.container_ && isDynamicSize && !goog.global['acgraph']['isNodeJS']) {
     this.checkSizeTimer_ = setTimeout(this.checkSize, this.maxResizeDelay_);
   }
 };
