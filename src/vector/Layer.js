@@ -74,11 +74,27 @@ acgraph.vector.Layer.prototype.SUPPORTED_DIRTY_STATES =
 //  Overrides
 //
 //----------------------------------------------------------------------------------------------------------------------
+/**
+ * Propagates dirty state recursively to children.
+ * @protected
+ */
+acgraph.vector.Layer.prototype.propagateVisualStatesToChildren = function() {
+  var clip = this.clip();
+  if (clip)
+    clip.id(null);
+
+  for (var i = 0; i < this.children.length; i++) {
+    this.children[i].propagateVisualStatesToChildren();
+  }
+  this.setDirtyState(acgraph.vector.Element.DirtyState.FILL |
+      acgraph.vector.Element.DirtyState.STROKE |
+      acgraph.vector.Element.DirtyState.CLIP);
+};
 
 
 /** @inheritDoc */
 acgraph.vector.Layer.prototype.setDirtyState = function(value) {
-  goog.base(this, 'setDirtyState', value);
+  acgraph.vector.Layer.base(this, 'setDirtyState', value);
   if (!!(value & (acgraph.vector.Element.DirtyState.CHILDREN |
       acgraph.vector.Element.DirtyState.CHILDREN_SET))) {
     this.dropBoundsCache();
@@ -142,9 +158,10 @@ acgraph.vector.Layer.prototype.addChildAt = function(element, index) {
   this.setDirtyState(acgraph.vector.Element.DirtyState.CHILDREN_SET);
 
   element.parentTransformationChanged();
-  if (this.cursor() || this.parentCursor) {
-    element.parentCursorChanged();
-    element.parentCursor = /** @type {?acgraph.vector.Cursor} */ (this.cursor() || this.parentCursor);
+  var cursor = /** @type {acgraph.vector.Cursor} */(this.cursor() || this.parentCursor);
+  if (element.parentCursor != cursor) {
+    element.parentCursor = cursor;
+    element.cursorChanged();
   }
 
   return this;
@@ -862,25 +879,19 @@ acgraph.vector.Layer.prototype.renderInternal = function() {
 
 /** @inheritDoc */
 acgraph.vector.Layer.prototype.cursorChanged = function() {
-  goog.base(this, 'cursorChanged');
-  this.propagateCursor();
-};
-
-
-/** @inheritDoc */
-acgraph.vector.Layer.prototype.parentCursorChanged = function() {
-  goog.base(this, 'parentCursorChanged');
-  this.propagateCursor();
+  acgraph.vector.Layer.base(this, 'cursorChanged');
+  this.propagateCursor_();
 };
 
 
 /**
  * Propagates cursor to its children.
+ * @private
  */
-acgraph.vector.Layer.prototype.propagateCursor = function() {
+acgraph.vector.Layer.prototype.propagateCursor_ = function() {
   for (var i = this.children.length; i--;) {
-    this.children[i].parentCursorChanged();
     this.children[i].parentCursor = /** @type {?acgraph.vector.Cursor} */ (this.cursor() || this.parentCursor);
+    this.children[i].cursorChanged();
   }
 };
 
