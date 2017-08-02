@@ -146,7 +146,7 @@ acgraph.vector.PatternFill.prototype.serialize = function() {
 //----------------------------------------------------------------------------------------------------------------------
 /** @inheritDoc */
 acgraph.vector.PatternFill.prototype.disposeInternal = function() {
-  acgraph.getRenderer().removeNode(this.domElement());
+  goog.dom.removeNode(this.domElement());
   this.bounds_ = null;
   goog.base(this, 'disposeInternal');
 };

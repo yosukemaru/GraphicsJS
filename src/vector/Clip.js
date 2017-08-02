@@ -290,7 +290,7 @@ acgraph.vector.Clip.prototype.removeChild = function(element) {
   element.setParent(null);
   var dom = element.domElement();
   if (dom)
-    acgraph.getRenderer().removeNode(dom);
+    goog.dom.removeNode(dom);
   this.needUpdateClip_();
   return element;
 };

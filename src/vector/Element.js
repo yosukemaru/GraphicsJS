@@ -290,7 +290,7 @@ acgraph.vector.Element.prototype.fullTransform_ = null;
  * @type {string}
  * @private
  */
-acgraph.vector.Element.prototype.id_ = '';
+acgraph.vector.Element.prototype.id_;
 
 
 /**
@@ -361,8 +361,10 @@ acgraph.vector.Element.prototype.id = function(opt_value) {
     }
     return this;
   }
-  if (!this.id_)
-    this.id_ = /** @type {string} */(this.id(acgraph.utils.IdGenerator.getInstance().generateId(this)));
+  if (!goog.isDef(this.id_)) {
+    // bad bad recursion
+    this.id(acgraph.utils.IdGenerator.getInstance().generateId(this));
+  }
   return this.id_;
 };
 
@@ -1093,7 +1095,7 @@ acgraph.vector.Element.prototype.renderInternal = function() {
  * @protected
  */
 acgraph.vector.Element.prototype.renderId = function() {
-  acgraph.getRenderer().setId(this, this.id_ || '');
+  acgraph.getRenderer().setId(this);
   this.clearDirtyState(acgraph.vector.Element.DirtyState.ID);
 };
 

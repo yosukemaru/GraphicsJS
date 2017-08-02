@@ -4,6 +4,7 @@ goog.require('acgraph.error');
 goog.require('acgraph.utils.IdGenerator');
 goog.require('acgraph.vector.Element');
 goog.require('acgraph.vector.ILayer');
+goog.require('goog.dom');
 goog.require('goog.math.Rect');
 
 
@@ -954,14 +955,12 @@ acgraph.vector.Layer.prototype.renderChildrenDom = function(maxChanges) {
   var addings = [];
   // array of removed children. contains indices from this.domChildren which were removed.
   var removings = [];
-  // renderer for add() and remove() functions closure
-  var renderer = acgraph.getRenderer();
   // closed function add(), it adds a child to DOM, if it is possible and sets flagSuccess in case of failure
   // returns boolean - adding success or failure.
   var add = function(child) {
     var childDom = child.domElement();
     if (childDom) {
-      renderer.appendChild(domElement, childDom);
+      goog.dom.appendChild(domElement, childDom);
       changesMade++;
       addings.push(i);
       child.notifyPrevParent(true);
@@ -976,7 +975,7 @@ acgraph.vector.Layer.prototype.renderChildrenDom = function(maxChanges) {
     // in theory we don't need this check, cause an element without DOM can't appear in this.domChildren,
     // but we still check, just in case something nasty happened...
     if (childDom) {
-      renderer.removeNode(childDom);
+      goog.dom.removeNode(childDom);
       changesMade++;
     }
     child.notifyPrevParent(false);
