@@ -382,7 +382,7 @@ acgraph.vector.Renderer.prototype.getPathString = function(path, opt_transformed
       list.push(name);
       if (segment == acgraph.vector.PathBase.Segment.ARCTO) {
         pushArcToArgs(list, args);
-      } else {
+      } else if (segment != acgraph.vector.PathBase.Segment.CLOSE) {
         acgraph.utils.partialApplyingArgsToFunction(Array.prototype.push, args, list);
       }
     }

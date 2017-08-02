@@ -811,10 +811,11 @@ acgraph.vector.Text.prototype.path = function(opt_value) {
     var stageSuspended = !this.getStage() || this.getStage().isSuspended();
     if (!stageSuspended) this.getStage().suspend();
     this.defragmented = false;
-    this.setDirtyState(acgraph.vector.Element.DirtyState.STYLE);
-    this.setDirtyState(acgraph.vector.Element.DirtyState.DATA);
-    this.setDirtyState(acgraph.vector.Element.DirtyState.POSITION);
-    this.setDirtyState(acgraph.vector.Element.DirtyState.CHILDREN);
+    this.setDirtyState(
+        acgraph.vector.Element.DirtyState.STYLE |
+        acgraph.vector.Element.DirtyState.DATA |
+        acgraph.vector.Element.DirtyState.POSITION |
+        acgraph.vector.Element.DirtyState.CHILDREN);
     this.transformAfterChange();
     if (!stageSuspended) this.getStage().resume();
 
@@ -1046,16 +1047,28 @@ acgraph.vector.Text.prototype.getLines = function() {
 
 /** @inheritDoc */
 acgraph.vector.Text.prototype.getBoundsWithoutTransform = function() {
+  return this.bounds.clone();
+};
+
+
+/** @inheritDoc */
+acgraph.vector.Text.prototype.getBoundsWithTransform = function(transform) {
   if (!this.defragmented) this.textDefragmentation();
   var result;
-  if (this.path()) {
-    if (!this.textByPathBoundsCache)
-      this.textByPathBoundsCache = acgraph.getRenderer().measureTextDom(this);
-    result = this.textByPathBoundsCache.clone();
-  } else {
-    result = this.bounds.clone();
-  }
+  if (transform)
+    result = acgraph.vector.Text.base(this, 'getBoundsWithTransform', transform);
+  else
+    result = this.calcBoundsWithTransform(null);
   return result;
+};
+
+
+/** @inheritDoc */
+acgraph.vector.Text.prototype.calcBoundsWithTransform = function(transform) {
+  var bounds = this.path() ?
+      this.textByPathBoundsCache ? this.textByPathBoundsCache : acgraph.getRenderer().measureTextDom(this) :
+      this.bounds.clone();
+  return acgraph.math.getBoundsOfRectWithTransform(bounds, transform);
 };
 
 

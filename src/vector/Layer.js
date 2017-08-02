@@ -80,16 +80,10 @@ acgraph.vector.Layer.prototype.SUPPORTED_DIRTY_STATES =
  * @protected
  */
 acgraph.vector.Layer.prototype.propagateVisualStatesToChildren = function() {
-  var clip = this.clip();
-  if (clip)
-    clip.id(null);
-
   for (var i = 0; i < this.children.length; i++) {
     this.children[i].propagateVisualStatesToChildren();
   }
-  this.setDirtyState(acgraph.vector.Element.DirtyState.FILL |
-      acgraph.vector.Element.DirtyState.STROKE |
-      acgraph.vector.Element.DirtyState.CLIP);
+  acgraph.vector.Layer.base(this, 'propagateVisualStatesToChildren');
 };
 
 

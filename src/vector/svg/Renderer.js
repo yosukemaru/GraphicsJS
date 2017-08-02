@@ -1,5 +1,6 @@
 goog.provide('acgraph.vector.svg.Renderer');
 goog.require('acgraph.utils.IdGenerator');
+goog.require('acgraph.vector.PathBase');
 goog.require('acgraph.vector.Renderer');
 goog.require('goog.dom');
 goog.require('goog.math.Line');

@@ -1,6 +1,7 @@
 goog.provide('acgraph.vector.vml.Renderer');
 goog.require('acgraph.utils.IdGenerator');
 goog.require('acgraph.vector.LinearGradient');
+goog.require('acgraph.vector.PathBase');
 goog.require('acgraph.vector.Renderer');
 goog.require('acgraph.vector.vml.RadialGradient');
 goog.require('goog.array');

@@ -414,7 +414,7 @@ acgraph.vector.Element.prototype.parent = function(opt_value) {
       if (opt_value != this.parent_) {
         var stage = this.getStage();
         var stageChanged = (stage && stage != opt_value.getStage());
-        opt_value.addChild(this);
+        (/** @type {acgraph.vector.ILayer} */(opt_value)).addChild(this);
         if (stageChanged)
           this.propagateVisualStatesToChildren();
       }
@@ -431,7 +431,15 @@ acgraph.vector.Element.prototype.parent = function(opt_value) {
  * Propagates dirty state recursively to children.
  * @protected
  */
-acgraph.vector.Element.prototype.propagateVisualStatesToChildren = function(){};
+acgraph.vector.Element.prototype.propagateVisualStatesToChildren = function() {
+  var clip = this.clip();
+  if (clip)
+    clip.id(null);
+
+  this.setDirtyState(acgraph.vector.Element.DirtyState.FILL |
+      acgraph.vector.Element.DirtyState.STROKE |
+      acgraph.vector.Element.DirtyState.CLIP);
+};
 
 
 /**
@@ -651,8 +659,8 @@ acgraph.vector.Element.prototype.transformationChanged = function() {
   this.fullTransform_ = null;
   this.inverseFullTransform_ = null;
   this.dropBoundsCache();
-  this.reclip_();
   this.setDirtyState(acgraph.vector.Element.DirtyState.TRANSFORMATION);
+  this.reclip_();
 };
 
 
@@ -663,9 +671,9 @@ acgraph.vector.Element.prototype.transformationChanged = function() {
 acgraph.vector.Element.prototype.parentTransformationChanged = function() {
   this.fullTransform_ = null;
   this.dropBoundsCache();
-  this.reclip_();
   if (acgraph.getRenderer().needsReRenderOnParentTransformationChange())
     this.setDirtyState(acgraph.vector.Element.DirtyState.PARENT_TRANSFORMATION);
+  this.reclip_();
 };
 
 

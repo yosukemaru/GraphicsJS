@@ -109,6 +109,33 @@ acgraph.vector.HatchFill.HatchFillType = {
 
 
 /**
+ * @param {number} w
+ * @param {number} h
+ * @param {Array.<number>} pixelPositions
+ * @this {acgraph.vector.HatchFill}
+ * @private
+ */
+acgraph.vector.HatchFill.percentHelper_ = function(w, h, pixelPositions) {
+  this.bounds = new goog.math.Rect(0, 0, w, h);
+  this.onePixelRects_(pixelPositions);
+};
+
+
+/**
+ * @param {number} w
+ * @param {number} h
+ * @param {Array.<number>} pixelPositions
+ * @this {acgraph.vector.HatchFill}
+ * @private
+ */
+acgraph.vector.HatchFill.bigPercentHelper_ = function(w, h, pixelPositions) {
+  this.bounds = new goog.math.Rect(0, 0, w, h);
+  this.rectHelper_(w, h);
+  this.onePixelRects_(pixelPositions, 'white');
+};
+
+
+/**
  * @const {Object<acgraph.vector.HatchFill.HatchFillType, function(this:acgraph.vector.HatchFill)>}
  */
 acgraph.vector.HatchFill.creationMap_ = (function() {
@@ -271,33 +298,6 @@ acgraph.vector.HatchFill.normalizeHatchFillType = function(value, opt_default) {
       return acgraph.vector.HatchFill.HatchFillType[i];
   }
   return opt_default || acgraph.vector.HatchFill.HatchFillType.BACKWARD_DIAGONAL;
-};
-
-
-/**
- * @param {number} w
- * @param {number} h
- * @param {Array.<number>} pixelPositions
- * @this {acgraph.vector.HatchFill}
- * @private
- */
-acgraph.vector.HatchFill.percentHelper_ = function(w, h, pixelPositions) {
-  this.bounds = new goog.math.Rect(0, 0, w, h);
-  this.onePixelRects_(pixelPositions);
-};
-
-
-/**
- * @param {number} w
- * @param {number} h
- * @param {Array.<number>} pixelPositions
- * @this {acgraph.vector.HatchFill}
- * @private
- */
-acgraph.vector.HatchFill.bigPercentHelper_ = function(w, h, pixelPositions) {
-  this.bounds = new goog.math.Rect(0, 0, w, h);
-  this.rectHelper_(w, h);
-  this.onePixelRects_(pixelPositions, 'white');
 };
 
 
