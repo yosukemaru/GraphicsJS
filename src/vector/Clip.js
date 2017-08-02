@@ -109,6 +109,7 @@ acgraph.vector.Clip.prototype.shape = function(opt_leftOrShape, opt_top, opt_wid
           var t = acgraph.vector.Clip.shapesHelper_[i];
           if (this.shape_ instanceof t && opt_leftOrShape instanceof t) {
             sameType = true;
+            break;
           }
         }
 
@@ -255,26 +256,9 @@ acgraph.vector.Clip.prototype.serialize = function() {
  * @param {Object} data Data for deserialization.
  */
 acgraph.vector.Clip.prototype.deserialize = function(data) {
-  var type = data['type'];
-  var primitive;
-  switch (type) {
-    case 'rect':
-      primitive = acgraph.rect();
-      break;
-    case 'circle':
-      primitive = acgraph.circle();
-      break;
-    case 'ellipse':
-      primitive = acgraph.ellipse();
-      break;
-    case 'path':
-      primitive = acgraph.path();
-      break;
-    default:
-      primitive = null;
-      break;
-  }
-  if (primitive) {
+  var type = acgraph.vector.Clip.shapesHelper_[data['type']];
+  if (type) {
+    var primitive = new type();
     primitive.deserialize(data);
     this.shape(primitive);
   }

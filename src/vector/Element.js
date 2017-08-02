@@ -408,12 +408,14 @@ acgraph.vector.Element.prototype.domElement = function() {
  */
 acgraph.vector.Element.prototype.parent = function(opt_value) {
   if (goog.isDef(opt_value)) {
-    if (opt_value && opt_value != this.parent_) {
-      var stage = this.getStage();
-      var stageChanged = (stage && stage != opt_value.getStage());
-      opt_value.addChild(this);
-      if (stageChanged)
-        this.propagateVisualStatesToChildren();
+    if (opt_value) {
+      if (opt_value != this.parent_) {
+        var stage = this.getStage();
+        var stageChanged = (stage && stage != opt_value.getStage());
+        opt_value.addChild(this);
+        if (stageChanged)
+          this.propagateVisualStatesToChildren();
+      }
     } else {
       this.remove();
     }
@@ -636,7 +638,7 @@ acgraph.vector.Element.prototype.notifyPrevParent = function(doCry) {
 /**
  * Invoked before applying a transformation.
  */
-acgraph.vector.Element.prototype.beforeTransformationChanged = function(){};
+acgraph.vector.Element.prototype.beforeTransformationChanged = goog.nullFunction;
 
 
 /**
@@ -659,9 +661,9 @@ acgraph.vector.Element.prototype.transformationChanged = function() {
 acgraph.vector.Element.prototype.parentTransformationChanged = function() {
   this.fullTransform_ = null;
   this.dropBoundsCache();
+  this.reclip_();
   if (acgraph.getRenderer().needsReRenderOnParentTransformationChange())
     this.setDirtyState(acgraph.vector.Element.DirtyState.PARENT_TRANSFORMATION);
-  this.reclip_();
 };
 
 
