@@ -78,26 +78,6 @@ acgraph.vector.PatternFill.prototype.getBoundsWithoutTransform = function() {
 
 
 /** @inheritDoc */
-acgraph.vector.PatternFill.prototype.getBoundsWithTransform = function(transform) {
-  var isSelfTransform = transform == this.getSelfTransformation();
-  var isFullTransform = transform == this.getFullTransformation();
-  if (this.boundsCache && isSelfTransform)
-    return this.boundsCache.clone();
-  else if (this.absoluteBoundsCache && isFullTransform)
-    return this.absoluteBoundsCache.clone();
-  else {
-    /** @type {!goog.math.Rect} */
-    var bounds = acgraph.math.getBoundsOfRectWithTransform(this.bounds.clone(), transform);
-    if (isSelfTransform)
-      this.boundsCache = bounds.clone();
-    if (isFullTransform)
-      this.absoluteBoundsCache = bounds.clone();
-    return bounds;
-  }
-};
-
-
-/** @inheritDoc */
 acgraph.vector.PatternFill.prototype.createDomInternal = function() {
   return acgraph.getRenderer().createFillPatternElement();
 };

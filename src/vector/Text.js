@@ -1046,43 +1046,16 @@ acgraph.vector.Text.prototype.getLines = function() {
 
 /** @inheritDoc */
 acgraph.vector.Text.prototype.getBoundsWithoutTransform = function() {
-  return this.bounds.clone();
-};
-
-
-/** @inheritDoc */
-acgraph.vector.Text.prototype.getBoundsWithTransform = function(transform) {
   if (!this.defragmented) this.textDefragmentation();
-
-  if (!transform) {
-    if (this.path()) {
-      if (this.textByPathBoundsCache)
-        return this.textByPathBoundsCache.clone();
-      else
-        return this.textByPathBoundsCache = acgraph.getRenderer().measureTextDom(this);
-    }
-    return this.bounds.clone();
+  var result;
+  if (this.path()) {
+    if (!this.textByPathBoundsCache)
+      this.textByPathBoundsCache = acgraph.getRenderer().measureTextDom(this);
+    result = this.textByPathBoundsCache.clone();
+  } else {
+    result = this.bounds.clone();
   }
-
-  var isSelfTransform = transform == this.getSelfTransformation();
-  var isFullTransform = transform == this.getFullTransformation();
-
-  if (this.boundsCache && isSelfTransform)
-    return this.boundsCache.clone();
-  else if (this.absoluteBoundsCache && isFullTransform)
-    return this.absoluteBoundsCache.clone();
-  else {
-    var bounds = this.path() ?
-        this.textByPathBoundsCache ? this.textByPathBoundsCache : acgraph.getRenderer().measureTextDom(this) :
-        this.bounds.clone();
-    /** @type {!goog.math.Rect} */
-    var rect = acgraph.math.getBoundsOfRectWithTransform(bounds, transform);
-    if (isSelfTransform)
-      this.boundsCache = rect.clone();
-    if (isFullTransform)
-      this.absoluteBoundsCache = rect.clone();
-    return rect;
-  }
+  return result;
 };
 
 

@@ -1107,36 +1107,24 @@ acgraph.vector.Layer.prototype.renderTransformation = function() {
 //
 //----------------------------------------------------------------------------------------------------------------------
 /** @inheritDoc */
-acgraph.vector.Layer.prototype.getBoundsWithTransform = function(transform) {
-  var isSelfTransform = transform == this.getSelfTransformation();
-  var isFullTransform = transform == this.getFullTransformation();
-  if (this.boundsCache && isSelfTransform)
-    return this.boundsCache.clone();
-  else if (this.absoluteBoundsCache && isFullTransform)
-    return this.absoluteBoundsCache.clone();
-  else {
-    /** @type {goog.math.Rect} */
-    var bounds = null;
-    for (var i = 0, len = this.children.length; i < len; i++) {
-      /** @type {acgraph.vector.Element} */
-      var child = this.children[i];
-      /** @type {!goog.math.Rect} */
-      var childBounds = child.getBoundsWithTransform(acgraph.math.concatMatrixes(transform,
-          child.getSelfTransformation()));
-      if (!isNaN(childBounds.left) && !isNaN(childBounds.top) && !isNaN(childBounds.width) && !isNaN(childBounds.height))
-        if (bounds)
-          bounds.boundingRect(childBounds);
-        else
-          bounds = childBounds;
-    }
-    if (!bounds)
-      bounds = acgraph.math.getBoundsOfRectWithTransform(new goog.math.Rect(0, 0, 0, 0), transform);
-    if (isSelfTransform)
-      this.boundsCache = bounds.clone();
-    if (isFullTransform)
-      this.absoluteBoundsCache = bounds.clone();
-    return bounds;
+acgraph.vector.Layer.prototype.calcBoundsWithTransform = function(transform) {
+  /** @type {goog.math.Rect} */
+  var bounds = null;
+  for (var i = 0, len = this.children.length; i < len; i++) {
+    /** @type {acgraph.vector.Element} */
+    var child = this.children[i];
+    /** @type {!goog.math.Rect} */
+    var childBounds = child.getBoundsWithTransform(acgraph.math.concatMatrixes(transform,
+        child.getSelfTransformation()));
+    if (!isNaN(childBounds.left) && !isNaN(childBounds.top) && !isNaN(childBounds.width) && !isNaN(childBounds.height))
+      if (bounds)
+        bounds.boundingRect(childBounds);
+      else
+        bounds = childBounds;
   }
+  if (!bounds)
+    bounds = acgraph.math.getBoundsOfRectWithTransform(new goog.math.Rect(0, 0, 0, 0), transform);
+  return bounds;
 };
 
 

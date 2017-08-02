@@ -1350,17 +1350,19 @@ acgraph.vector.Element.prototype.zIndex = function(opt_value) {
 //----------------------------------------------------------------------------------------------------------------------
 /**
  Gets/sets the current visibility flag.
- @param {boolean=} opt_isVisible .
+ @param {boolean=} opt_value .
  @return {!acgraph.vector.Element|boolean} .
  */
-acgraph.vector.Element.prototype.visible = function(opt_isVisible) {
-  if (arguments.length == 0) return this.visible_;
-  if (this.visible_ != opt_isVisible) {
-    this.visible_ = goog.isDefAndNotNull(opt_isVisible) ? opt_isVisible : true;
-    // If visibility has changed - set sync flag
-    this.setDirtyState(acgraph.vector.Element.DirtyState.VISIBILITY);
+acgraph.vector.Element.prototype.visible = function(opt_value) {
+  if (goog.isDef(opt_value)) {
+    opt_value = !!opt_value;
+    if (this.visible_ != opt_value) {
+      this.visible_ = opt_value;
+      this.setDirtyState(acgraph.vector.Element.DirtyState.VISIBILITY);
+    }
+    return this;
   }
-  return this;
+  return this.visible_;
 };
 
 
@@ -1450,9 +1452,7 @@ acgraph.vector.Element.prototype.boundsCache = null;
  @return {number} X in the coordinate system of the parent.
  */
 acgraph.vector.Element.prototype.getX = function() {
-  /** @type {!goog.math.Rect} */
-  var bounds = this.boundsCache || this.getBounds();
-  return bounds.left;
+  return this.getBounds().left;
 };
 
 
@@ -1461,9 +1461,7 @@ acgraph.vector.Element.prototype.getX = function() {
  @return {number} Y in the coordinate system of the parent.
  */
 acgraph.vector.Element.prototype.getY = function() {
-  /** @type {!goog.math.Rect} */
-  var bounds = this.boundsCache || this.getBounds();
-  return bounds.top;
+  return this.getBounds().top;
 };
 
 
@@ -1472,9 +1470,7 @@ acgraph.vector.Element.prototype.getY = function() {
  @return {number} Width.
  */
 acgraph.vector.Element.prototype.getWidth = function() {
-  /** @type {!goog.math.Rect} */
-  var bounds = this.boundsCache || this.getBounds();
-  return bounds.width;
+  return this.getBounds().width;
 };
 
 
@@ -1483,9 +1479,7 @@ acgraph.vector.Element.prototype.getWidth = function() {
  @return {number} Height.
  */
 acgraph.vector.Element.prototype.getHeight = function() {
-  /** @type {!goog.math.Rect} */
-  var bounds = this.boundsCache || this.getBounds();
-  return bounds.height;
+  return this.getBounds().height;
 };
 
 
@@ -1494,7 +1488,7 @@ acgraph.vector.Element.prototype.getHeight = function() {
  @return {!goog.math.Rect} Bounds.
  */
 acgraph.vector.Element.prototype.getBounds = function() {
-  return this.getBoundsWithTransform(this.getSelfTransformation());
+  return this.boundsCache || this.getBoundsWithTransform(this.getSelfTransformation());
 };
 
 
@@ -1511,9 +1505,7 @@ acgraph.vector.Element.prototype.absoluteBoundsCache = null;
  @return {number} Absolute X.
  */
 acgraph.vector.Element.prototype.getAbsoluteX = function() {
-  /** @type {!goog.math.Rect} */
-  var bounds = this.absoluteBoundsCache || this.getAbsoluteBounds();
-  return bounds.left;
+  return this.getAbsoluteBounds().left;
 };
 
 
@@ -1522,9 +1514,7 @@ acgraph.vector.Element.prototype.getAbsoluteX = function() {
  @return {number} Absolute Y.
  */
 acgraph.vector.Element.prototype.getAbsoluteY = function() {
-  /** @type {!goog.math.Rect} */
-  var bounds = this.absoluteBoundsCache || this.getAbsoluteBounds();
-  return bounds.top;
+  return this.getAbsoluteBounds().top;
 };
 
 
@@ -1533,9 +1523,7 @@ acgraph.vector.Element.prototype.getAbsoluteY = function() {
  @return {number} Width.
  */
 acgraph.vector.Element.prototype.getAbsoluteWidth = function() {
-  /** @type {!goog.math.Rect} */
-  var bounds = this.absoluteBoundsCache || this.getAbsoluteBounds();
-  return bounds.width;
+  return this.getAbsoluteBounds().width;
 };
 
 
@@ -1544,9 +1532,7 @@ acgraph.vector.Element.prototype.getAbsoluteWidth = function() {
  @return {number} Height.
  */
 acgraph.vector.Element.prototype.getAbsoluteHeight = function() {
-  /** @type {!goog.math.Rect} */
-  var bounds = this.absoluteBoundsCache || this.getAbsoluteBounds();
-  return bounds.height;
+  return this.getAbsoluteBounds().height;
 };
 
 
@@ -1555,7 +1541,7 @@ acgraph.vector.Element.prototype.getAbsoluteHeight = function() {
  @return {!goog.math.Rect} Absolute element bounds.
  */
 acgraph.vector.Element.prototype.getAbsoluteBounds = function() {
-  return this.getBoundsWithTransform(this.getFullTransformation());
+  return this.absoluteBoundsCache || this.getBoundsWithTransform(this.getFullTransformation());
 };
 
 
@@ -1565,7 +1551,36 @@ acgraph.vector.Element.prototype.getAbsoluteBounds = function() {
  * @param {goog.math.AffineTransform} transform Transformation.
  * @return {!goog.math.Rect} Bounds.
  */
-acgraph.vector.Element.prototype.getBoundsWithTransform = goog.abstractMethod;
+acgraph.vector.Element.prototype.getBoundsWithTransform = function(transform) {
+  var isSelfTransform = transform == this.getSelfTransformation();
+  var result;
+  if (this.boundsCache && isSelfTransform) {
+    result = this.boundsCache.clone();
+  } else {
+    var isFullTransform = transform == this.getFullTransformation();
+    if (this.absoluteBoundsCache && isFullTransform) {
+      result = this.absoluteBoundsCache.clone();
+    } else {
+      result = this.calcBoundsWithTransform(transform);
+      if (isSelfTransform)
+        this.boundsCache = result.clone();
+      if (isFullTransform)
+        this.absoluteBoundsCache = result.clone();
+    }
+  }
+  return result;
+};
+
+
+/**
+ *
+ * @param {goog.math.AffineTransform} transform
+ * @return {!goog.math.Rect}
+ * @protected
+ */
+acgraph.vector.Element.prototype.calcBoundsWithTransform = function(transform) {
+  return acgraph.math.getBoundsOfRectWithTransform(this.getBoundsWithoutTransform(), transform);
+};
 
 
 /**
@@ -1679,7 +1694,7 @@ acgraph.vector.Element.prototype.serialize = function() {
  removes it from DOM.
  */
 acgraph.vector.Element.prototype.dispose = function() {
-  goog.base(this, 'dispose');
+  acgraph.vector.Element.base(this, 'dispose');
 };
 
 
@@ -1690,7 +1705,7 @@ acgraph.vector.Element.prototype.disposeInternal = function() {
   else
     this.finalizeDisposing();
 
-  goog.base(this, 'disposeInternal');
+  acgraph.vector.Element.base(this, 'disposeInternal');
 };
 
 

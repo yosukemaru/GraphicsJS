@@ -20,7 +20,7 @@ goog.require('goog.math.Rect');
  * @implements {acgraph.vector.ILayer}
  */
 acgraph.vector.Clip = function(stage, opt_leftOrShape, opt_top, opt_width, opt_height) {
-  goog.base(this);
+  acgraph.vector.Clip.base(this, 'constructor');
 
   /**
    * Stage.
@@ -79,6 +79,19 @@ acgraph.vector.Clip.prototype.stage = function(opt_value) {
 
 
 /**
+ * Supported shape types.
+ * @type {Object<string, Function>}
+ * @private
+ */
+acgraph.vector.Clip.shapesHelper_ = {
+  'rect': acgraph.vector.Rect,
+  'circle': acgraph.vector.Circle,
+  'ellipse': acgraph.vector.Ellipse,
+  'path': acgraph.vector.Path
+};
+
+
+/**
  * Shape to clip.
  * @param {(number|Array.<number>|acgraph.vector.Shape|goog.math.Rect|Object|null)=} opt_leftOrShape Left coordinate of bounds
  * or rect or vector shape or array or object representing bounds.
@@ -91,10 +104,13 @@ acgraph.vector.Clip.prototype.shape = function(opt_leftOrShape, opt_top, opt_wid
   if (arguments.length) {
     if (opt_leftOrShape instanceof acgraph.vector.Shape) {
       if (this.shape_) {
-        var sameType = this.shape_ instanceof acgraph.vector.Rect && opt_leftOrShape instanceof acgraph.vector.Rect ||
-            this.shape_ instanceof acgraph.vector.Circle && opt_leftOrShape instanceof acgraph.vector.Circle ||
-            this.shape_ instanceof acgraph.vector.Ellipse && opt_leftOrShape instanceof acgraph.vector.Ellipse ||
-            this.shape_ instanceof acgraph.vector.Path && opt_leftOrShape instanceof acgraph.vector.Path;
+        var sameType = false;
+        for (var i in acgraph.vector.Clip.shapesHelper_) {
+          var t = acgraph.vector.Clip.shapesHelper_[i];
+          if (this.shape_ instanceof t && opt_leftOrShape instanceof t) {
+            sameType = true;
+          }
+        }
 
         if (sameType) {
           this.shape_.deserialize(opt_leftOrShape.serialize());
@@ -339,7 +355,7 @@ acgraph.vector.Clip.prototype.setDirtyState = function(value) {
  * Disposes clip. Removes it and his children from defs, clears clip for managed elements.
  */
 acgraph.vector.Clip.prototype.dispose = function() {
-  goog.base(this, 'dispose');
+  acgraph.vector.Clip.base(this, 'dispose');
 };
 
 
@@ -356,7 +372,7 @@ acgraph.vector.Clip.prototype.disposeInternal = function() {
   delete this.dirty_;
   delete this.shape_;
 
-  goog.base(this, 'disposeInternal');
+  acgraph.vector.Clip.base(this, 'disposeInternal');
 };
 
 
