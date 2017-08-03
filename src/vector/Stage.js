@@ -63,6 +63,7 @@ acgraph.vector.Stage = function(opt_container, opt_width, opt_height) {
 
   this.renderAsync_ = goog.bind(this.renderAsync_, this);
   this.checkSize = goog.bind(this.checkSize, this);
+  var doc = goog.global['document'];
 
   /**
    * Event handler of the stage.
@@ -76,7 +77,9 @@ acgraph.vector.Stage = function(opt_container, opt_width, opt_height) {
    * @type {!Element}
    * @private
    */
-  this.internalContainer_ = goog.dom.createDom(goog.dom.TagName.DIV, {style: 'position:relative;left:0;top:0;overflow:hidden;'});
+  // this.internalContainer_ = goog.dom.createDom(goog.dom.TagName.DIV, {style: 'position:relative;left:0;top:0;overflow:hidden;'});
+  this.internalContainer_ = doc.createElement(goog.dom.TagName.DIV);
+  goog.style.setStyle(this.internalContainer_, {'position': 'relative', 'left': 0, 'top': 0, 'overflow': 'hidden'});
 
   /**
    * Root DOM element of stage object.
@@ -140,7 +143,7 @@ acgraph.vector.Stage = function(opt_container, opt_width, opt_height) {
 
   this.setWidth_(opt_width || '100%');
   this.setHeight_(opt_height || '100%');
-  this.container_ = goog.dom.getElement(opt_container || null);
+  this.container_ = doc.getElementById(opt_container || null);
   if (this.container_)
     this.updateContainer_();
   this.checkSize(true, true);
