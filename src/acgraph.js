@@ -503,7 +503,7 @@ acgraph.getReference = function() {
 
   return acgraph.getReferenceValue_ = acgraph.compatibility.USE_ABSOLUTE_REFERENCES ||
       (goog.isNull(acgraph.compatibility.USE_ABSOLUTE_REFERENCES) && goog.dom.getElementsByTagNameAndClass('base').length) ?
-          window.location.origin + window.location.pathname + window.location.search :
+          goog.global.location.origin + goog.global.location.pathname + goog.global.location.search :
           '';
 };
 
