@@ -190,16 +190,34 @@ acgraph.getRenderer = function() {
  * all supported technologies.
  */
 acgraph.create = function(opt_container, opt_width, opt_height) {
+  var stage;
   if (acgraph.type_ == acgraph.StageType.VML) {
     var vml = goog.global['acgraph']['vml'];
     if (vml) {
-      return new vml['Stage'](opt_container, opt_width, opt_height);
+      stage =  new vml['Stage'](opt_container, opt_width, opt_height);
     } else {
       throw Error('VML module should be included to render AnyChart in IE8-');
     }
   } else {
-    return new acgraph.vector.svg.Stage(opt_container, opt_width, opt_height);
+    stage = new acgraph.vector.svg.Stage(opt_container, opt_width, opt_height);
   }
+  if (!goog.global['acgraph'].stages)
+    goog.global['acgraph'].stages = {};
+
+  var id = acgraph.utils.IdGenerator.getInstance().identify(stage, acgraph.utils.IdGenerator.ElementTypePrefix.STAGE);
+  goog.global['acgraph'].stages[id] = stage;
+
+  return stage;
+};
+
+
+/**
+ * Retruns stage by id.
+ * @param {string} id .
+ * @return {acgraph.vector.Stage}
+ */
+acgraph.getStage = function(id) {
+  return goog.global['acgraph'].stages[id];
 };
 
 
@@ -550,6 +568,7 @@ acgraph.updateReferences = function() {
 //exports
 (function() {
   goog.exportSymbol('acgraph.create', acgraph.create);
+  goog.exportSymbol('acgraph.getStage', acgraph.getStage);
   goog.exportSymbol('acgraph.type', acgraph.type);
   goog.exportSymbol('acgraph.rect', acgraph.rect);
   goog.exportSymbol('acgraph.circle', acgraph.circle);

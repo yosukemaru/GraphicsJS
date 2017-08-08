@@ -185,6 +185,23 @@ acgraph.vector.svg.Renderer.prototype.createMeasurement = function() {
 };
 
 
+acgraph.vector.svg.Renderer.prototype.disposeMeasurement = function() {
+  goog.dom.removeNode(this.measurementText_);
+  goog.dom.removeNode(this.measurementTextNode_);
+  goog.dom.removeNode(this.mesurmentDef_);
+  goog.dom.removeNode(this.measurementLayerForBBox_);
+  goog.dom.removeNode(this.measurementGroupNode_);
+  goog.dom.removeNode(this.measurement_);
+
+  this.measurementText_ = null;
+  this.measurementTextNode_ = null;
+  this.mesurmentDef_ = null;
+  this.measurementLayerForBBox_ = null;
+  this.measurementGroupNode_ = null;
+  this.measurement_ = null;
+};
+
+
 /**
  * Measures text.
  * @param {string} text The text to measure.
