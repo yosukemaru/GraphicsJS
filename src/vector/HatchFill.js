@@ -312,7 +312,7 @@ acgraph.vector.HatchFill.prototype.segmentedDrawHelper_ = function(segments, opt
   for (var i = 0; i < segments.length; i++) {
     var segment = segments[i];
     path.moveTo(segment[0], segment[1]);
-    for (var j = 2; j < segment.length; j += 1) {
+    for (var j = 2; j < segment.length; j += 2) {
       path.lineTo(segment[j], segment[j + 1]);
     }
   }
