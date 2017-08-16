@@ -185,6 +185,9 @@ acgraph.vector.svg.Renderer.prototype.createMeasurement = function() {
 };
 
 
+/**
+ * Measurements disposing.
+ */
 acgraph.vector.svg.Renderer.prototype.disposeMeasurement = function() {
   goog.dom.removeNode(this.measurementText_);
   goog.dom.removeNode(this.measurementTextNode_);

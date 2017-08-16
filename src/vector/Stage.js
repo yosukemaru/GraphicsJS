@@ -62,6 +62,12 @@ acgraph.vector.Stage = function(opt_container, opt_width, opt_height) {
   this.checkSize = goog.bind(this.checkSize, this);
   var doc = goog.global['document'];
 
+  if (!goog.global['acgraph'].stages)
+    goog.global['acgraph'].stages = {};
+
+  var id = acgraph.utils.IdGenerator.getInstance().identify(this, acgraph.utils.IdGenerator.ElementTypePrefix.STAGE);
+  goog.global['acgraph'].stages[id] = this;
+
   this.charts = {};
 
   /**
@@ -95,8 +101,6 @@ acgraph.vector.Stage = function(opt_container, opt_width, opt_height) {
   // Add class for check anychart-ui.css attached. (DVF-1619)
   goog.dom.classlist.add(this.domElement_, 'anychart-ui-support');
   goog.dom.appendChild(this.internalContainer_, this.domElement_);
-
-  var id = acgraph.utils.IdGenerator.getInstance().identify(this, acgraph.utils.IdGenerator.ElementTypePrefix.STAGE);
   this.domElement_.setAttribute('ac-id', id);
 
 
@@ -146,7 +150,8 @@ acgraph.vector.Stage = function(opt_container, opt_width, opt_height) {
 
   this.setWidth_(opt_width || '100%');
   this.setHeight_(opt_height || '100%');
-  this.container_ = doc.getElementById(opt_container || null);
+  this.container_ = goog.isString(opt_container) ?
+      doc.getElementById(opt_container) : opt_container;
   if (this.container_)
     this.updateContainer_();
   this.checkSize(true, true);
@@ -774,6 +779,10 @@ acgraph.vector.Stage.prototype.clip = function(opt_value) {
 };
 
 
+/**
+ * Returns anychart charts for this stage.
+ * @return {Object}
+ */
 acgraph.vector.Stage.prototype.getCharts = function() {
   return this.charts;
 };

@@ -201,11 +201,6 @@ acgraph.create = function(opt_container, opt_width, opt_height) {
   } else {
     stage = new acgraph.vector.svg.Stage(opt_container, opt_width, opt_height);
   }
-  if (!goog.global['acgraph'].stages)
-    goog.global['acgraph'].stages = {};
-
-  var id = acgraph.utils.IdGenerator.getInstance().identify(stage, acgraph.utils.IdGenerator.ElementTypePrefix.STAGE);
-  goog.global['acgraph'].stages[id] = stage;
 
   return stage;
 };
